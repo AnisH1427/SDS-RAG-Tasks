@@ -105,6 +105,12 @@ This will launch the web interface for querying and interacting with your knowle
 - For custom configurations, edit `config/prompt_config.yaml`.
 - Use the processed data in `data/processed/` for downstream tasks or QA.
 
+## Deployment
+The application is also hosted on Streamlit Cloud. You can access it directly here:
+
+[https://sds-rag-tasks-y64gs2urakzskcdrmojtjy.streamlit.app/](https://sds-rag-tasks-y64gs2urakzskcdrmojtjy.streamlit.app/)
+
 ## License
 See [LICENSE](LICENSE) for details.
+
 
