@@ -5,25 +5,28 @@ This repository was created as part of a technical assessment for Smart Data Sol
 
 ## Data Description
 - **Type of Data**: The primary data source consists of financial reports in PDF format (e.g., `2022 Q3 AAPL.pdf`).
-- **Data Flow**: Raw PDFs are processed, text is extracted, chunked, and stored for downstream retrieval and embedding tasks.
+- **Data Flow**: Raw PDFs are processed, text is extracted, chunked, and stored for downstream retrieval and embedding tasks. The extraction and chunking results are saved as JSON files in `data/processed/`.
 
 ## Project Hierarchy & Chain of Thought
 ```
 SDS-RAG-Tasks/
 │
 ├── config/                
-│   └── prompt_config.yaml # System prompt instructions
+│   └── prompt_config.yaml # System prompt
 │
 ├── data/                  
-│   ├── raw/               # Raw PDF files
+│   ├── raw/               knowledge source
+│   │   └── 2022 Q3 AAPL.pdf
 │   └── processed/         # Processed and chunked data (JSON)
+│       ├── extracted_pdf_data.json   
+│       └── chunked_pdf_data.json     
 │
 ├── docs/                  
 │
-├── noteboks/              # 
-│   └── testing_of_text_extraction_method.ipynb # Experiments with extraction methods
+├── noteboks/              
+│   └── testing_of_text_extraction_method.ipynb # Extracts data and exports JSON format
 │
-├── src/                   # Source code
+├── src/                   
 │   ├── chunking.py        
 │   ├── embeddings_store.py
 │   ├── main.py            
@@ -31,28 +34,23 @@ SDS-RAG-Tasks/
 │
 ├── requirements.txt       # Python dependencies (for pip users)
 ├── pyproject.toml         # Project metadata and dependencies
-├── uv.lock                
-└── README.md              
+└── README.md              # Project documentation
 ```
 
 ## Project Workflow
 
-1. **Experimentation & Validation**  
-   Use notebooks in `noteboks/` (e.g., `testing_of_text_extraction_method.ipynb`) to test and compare different text extraction methods on your PDFs.
+1. **Extraction & Chunking**  
+   Use the notebook in `noteboks/` (e.g., `testing_of_text_extraction_method.ipynb`) to extract and chunk data from PDFs. This will export `extracted_pdf_data.json` and `chunked_pdf_data.json` in `data/processed/`.
 
-2. **Raw Data Ingestion**  
-   Place your PDF files in `data/raw/`.
+2. **Embedding Generation & Storage**  
+   Run the embedding script (e.g., `src/embeddings_store.py`) to generate embeddings using Google Embedding and store them in Qdrant. This step is separate from the Streamlit app.
 
-3. **Text Processing**  
-   Use the Streamlit app (`src/main.py`) to extract and chunk text from PDFs. Processed data is saved in `data/processed/`.
-
-4. **Embedding & Retrieval**  
-   Leverage the app’s features to generate vector embeddings and perform semantic search over your documents.
-
+3. **Retrieval & QA (Streamlit App)**  
+   Use the Streamlit app to query, retrieve, and interact with the processed and embedded data.
 
 ## Setup Instructions
 
-### Option 1: Quick Start with pip (No uv)
+### Option 1: Quick Start with pip
 1. **Create a virtual environment:**
    - On Windows:
      ```sh
@@ -97,19 +95,13 @@ MODEL=llama-3.1-8b-instant
 ```
 
 ## Usage
-1. **Prepare Data:**
-   - Place your PDF files in `data/raw/`.
-2. **Run the Streamlit App:**
-   - Start the application:
-     ```sh
-     streamlit run src/main.py
-     ```
-   - This will launch the web interface for uploading, processing, and querying PDFs.
-3. **Experiment:**
-   - Open and run notebooks in `noteboks/` (e.g., `testing_of_text_extraction_method.ipynb`) to test and compare extraction methods.
+To use the app, make sure the processed data exists in `data/processed/` (run the notebook in `noteboks/` if not), and embeddings are generated and stored in Qdrant (run `src/embeddings_store.py` if not). Then start the Streamlit application:
+```sh
+streamlit run src/main.py
+```
+This will launch the web interface for querying and interacting with your knowledge base.
 
 ## Re-evaluation & Testing
-- To re-run the pipeline, update or add new PDFs in `data/raw/` and use the Streamlit app.
 - For custom configurations, edit `config/prompt_config.yaml`.
 - Use the processed data in `data/processed/` for downstream tasks or QA.
 
