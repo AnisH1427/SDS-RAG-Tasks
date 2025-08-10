@@ -7,7 +7,7 @@ This repository was created as part of a technical assessment for Smart Data Sol
 - **Type of Data**: The primary data source consists of financial reports in PDF format (e.g., `2022 Q3 AAPL.pdf`).
 - **Data Flow**: Raw PDFs are processed, text is extracted, chunked, and stored for downstream retrieval and embedding tasks. The extraction and chunking results are saved as JSON files in `data/processed/`.
 
-## Project Hierarchy & Chain of Thought
+## Project Hierarchy 
 ```
 SDS-RAG-Tasks/
 │
