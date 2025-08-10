@@ -2,3 +2,4 @@
 .idea
 uv.lock
 .venv
+pyproject.toml
